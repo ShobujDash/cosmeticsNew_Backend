@@ -4,7 +4,7 @@
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/categories
+https://cosmeticsnew-backend.onrender.com/api/categories
 ```
 
 ## Endpoints
@@ -29,7 +29,7 @@ https://cosmetics-jh0f.onrender.com/api/categories
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/subcategories
+https://cosmeticsnew-backend.onrender.com/api/subcategories
 ```
 
 ## Endpoints
@@ -54,7 +54,7 @@ https://cosmetics-jh0f.onrender.com/api/subcategories
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/products
+https://cosmeticsnew-backend.onrender.com/api/products
 ```
 
 ## Endpoints
@@ -79,7 +79,7 @@ https://cosmetics-jh0f.onrender.com/api/products
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/orders
+https://cosmeticsnew-backend.onrender.com/api/orders
 ```
 
 ## Endpoints
@@ -103,7 +103,7 @@ https://cosmetics-jh0f.onrender.com/api/orders
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/sizes
+https://cosmeticsnew-backend.onrender.com/api/sizes
 ```
 
 ## Endpoints
@@ -126,7 +126,7 @@ https://cosmetics-jh0f.onrender.com/api/sizes
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/colors
+https://cosmeticsnew-backend.onrender.com/api/colors
 ```
 
 ## Endpoints
@@ -150,7 +150,7 @@ https://cosmetics-jh0f.onrender.com/api/colors
 
 ## Base URL
 ```
-https://cosmetics-jh0f.onrender.com/api/brands
+https://cosmeticsnew-backend.onrender.com/api/brands
 ```
 
 ## Endpoints
@@ -174,7 +174,9 @@ https://cosmetics-jh0f.onrender.com/api/brands
 # Cart API Documentation
 
 ## Base URL
-https://cosmetics-jh0f.onrender.com/api/cart
+```
+https://cosmeticsnew-backend.onrender.com/api/cart
+```
 
 ## Endpoints
 
