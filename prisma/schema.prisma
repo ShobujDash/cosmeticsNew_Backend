@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt  
+}
+
+model Product {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  productName   String
+  categoryID    String @db.ObjectId
+  subCategoryID String? @db.ObjectId
+  image1        String
+  image2        String?
+  image3        String?
+  image4        String?
+  image5        String?
+  purchasePrice Float
+  sellingPrice  Float
+  stock         Int
+  description   String
+  status        String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  category      Category? @relation(fields: [categoryID], references: [id])
+  subCategory   subcategory? @relation(fields: [subCategoryID], references: [id])
+}
+
+model Category {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryName String
+  image        String?
+  status       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  products     Product[]
+  subCategories subcategory[]
+}
+
+model subcategory {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryID      String @db.ObjectId
+  subCategoryName String
+  status          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  category        Category? @relation(fields: [categoryID], references: [id])
+  products       Product[]
+}
+
+model Order {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productID    String @db.ObjectId
+  invoice   String
+  date      DateTime?
+  userName  String?
+  userEmail String?
+  phone     String
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Brand {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  brandName String
+  brandImage String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Size {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  sizeName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Color {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  colorName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Cart {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  cartKey  String  @unique
+  products Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
