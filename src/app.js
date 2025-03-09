@@ -28,7 +28,7 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use("/uploads", express.static("src/uploads")); 
+app.use("/uploads", express.static("uploads")); 
 
 app.use("/api/auth", authRoutes);
 
