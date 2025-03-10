@@ -13,20 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  email    String @unique
-  password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt  
+model Slider {
+   id            String  @id @default(auto()) @map("_id") @db.ObjectId
+   image         String
+   title         String
+   description   String
+   text          String
+   side          String
+   exploreUrl    String?
+   shopUrl       String?
 }
 
 model Product {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
   productName   String
-  categoryID    String @db.ObjectId
-  subCategoryID String? @db.ObjectId
+  categoryName  String 
   image1        String
   image2        String?
   image3        String?
@@ -36,14 +37,9 @@ model Product {
   sellingPrice  Float
   stock         Int
   description   String
-  status        String?
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
-  // Relations
-  category      Category? @relation(fields: [categoryID], references: [id])
-  subCategory   subcategory? @relation(fields: [subCategoryID], references: [id])
 }
 
 model Category {
@@ -54,8 +50,7 @@ model Category {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  products     Product[]
-  subCategories subcategory[]
+
 }
 
 model subcategory {
@@ -65,10 +60,6 @@ model subcategory {
   status          String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-
-  // Relations
-  category        Category? @relation(fields: [categoryID], references: [id])
-  products       Product[]
 }
 
 model Order {

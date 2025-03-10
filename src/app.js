@@ -13,25 +13,37 @@ import sizeRoutes from "./routes/sizeRoutes.js";
 import colorRoutes from "./routes/colorRoutes.js";
 import brandRoutes from "./routes/brandRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import sliderRoutes from "./routes/sliderRoutes.js";
+import path from "path";
+
+// Fix for __dirname in ES module
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-// app.use(cors());
+
+// Get current directory path in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(
   cors({
-    origin: "*", // Allows requests from any origin
-    credentials: true, // Allows cookies
+    origin: "http://localhost:3000",
+    credentials: true, // Allow credentials (cookies)
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-app.use(morgan("dev"));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use("/uploads", express.static("uploads")); 
+
+app.use(morgan("dev"));
+// Updated static file serving
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/auth", authRoutes);
-
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/categories", categoryRoutes);
@@ -40,6 +52,7 @@ app.use("/api/sizes", sizeRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/sliders", sliderRoutes);
 
 app.use(errorHandler);
 
