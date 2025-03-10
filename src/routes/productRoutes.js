@@ -5,6 +5,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProductsByCategory,
 } from "../controllers/productController.js";
 import upload from "../config/multerConfig.js";
 
@@ -25,5 +26,6 @@ router.post(
 );
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
+router.get("/search", searchProductsByCategory);
 
 export default router;

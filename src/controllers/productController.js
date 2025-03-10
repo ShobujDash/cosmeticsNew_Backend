@@ -5,20 +5,17 @@ export const createProduct = async (req, res) => {
   try {
     const {
       productName,
-      categoryID,
-      subCategoryID,
+      categoryName,
       purchasePrice,
       sellingPrice,
       stock,
       description,
-      status = "active", // Default status
     } = req.body;
 
     // Validate required fields
     if (
       !productName ||
-      !categoryID ||
-      !subCategoryID ||
+      !categoryName ||
       !purchasePrice ||
       !sellingPrice ||
       !stock
@@ -26,7 +23,7 @@ export const createProduct = async (req, res) => {
       return res.status(400).json({
         status: "error",
         message:
-          "Product name, category ID, subcategory ID, purchase price, selling price, and stock are required.",
+          "Product name, category Name, purchase price, selling price, and stock are required.",
       });
     }
 
@@ -44,8 +41,7 @@ export const createProduct = async (req, res) => {
     const newProduct = await prisma.product.create({
       data: {
         productName,
-        categoryID,
-        subCategoryID,
+        categoryName,
         image1: req.files["image1"] ? req.files["image1"][0].filename : null,
         image2: req.files["image2"] ? req.files["image2"][0].filename : null,
         image3: req.files["image3"] ? req.files["image3"][0].filename : null,
@@ -55,7 +51,6 @@ export const createProduct = async (req, res) => {
         sellingPrice: parseFloat(sellingPrice),
         stock: parseInt(stock),
         description,
-        status,
       },
     });
 
@@ -78,9 +73,7 @@ export const createProduct = async (req, res) => {
 // ✅ Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await prisma.product.findMany({
-      include: { category: true, subCategory: true },
-    });
+    const products = await prisma.product.findMany();
 
     res.status(200).json({
       status: "success",
@@ -189,6 +182,50 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({
       status: "error",
       message: "Failed to delete product.",
+      error: error.message,
+    });
+  }
+};
+
+
+// ✅ Search products by categoryName
+export const searchProductsByCategory = async (req, res) => {
+  try {
+    const { category } = req.query;
+
+    if (!category) {
+      return res.status(400).json({
+        status: "error",
+        message: "Category name is required for search.",
+      });
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        categoryName: {
+          contains: category, // Case-insensitive search
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (products.length === 0) {
+      return res.status(404).json({
+        status: "error",
+        message: "No products found for this category.",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      results: products.length,
+      data: products,
+    });
+  } catch (error) {
+    console.error("Error searching products:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to search products.",
       error: error.message,
     });
   }

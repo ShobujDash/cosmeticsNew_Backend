@@ -2,7 +2,7 @@ import prisma from "../config/db.js";
 
 export const createCart = async (req, res) => {
   try {
-    const { products } = req.body;
+    const products  = req.body;
     const cartKey = req.cartKey;
 
     const cart = await prisma.cart.create({
