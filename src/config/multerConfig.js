@@ -4,7 +4,7 @@ import path from "path";
 // Multer Storage কনফিগারেশন
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/uploads/"); // uploads ফোল্ডারটি src এর ভিতরে থাকবে
+    cb(null, "uploads/"); // uploads ফোল্ডারটি src এর ভিতরে থাকবে
   },
   filename: (req, file, cb) => {
     cb(
